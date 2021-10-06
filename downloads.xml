@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<downloadlist>
+                    
+
+    
+    
+    
+        
+    
+
+    
+    <download id="1633517369676" range="true">
+                
+        <starttime>1633517371850</starttime>
+                
+        <endtime>1633517412445</endtime>
+                
+        <status>COMPLETED</status>
+                
+        <completed>49378376</completed>
+                
+        <url>https://github.com/subhra74/xdm/releases/download/7.2.10/xdm-setup-7.2.10.tar.xz</url>
+                
+        <file>
+                        
+            <name>dm-setup-7.2.10.tar</name>
+                        
+            <type>x</type>
+                        
+            <size>49378376</size>
+                        
+            <path>/home/zan/Downloads/dm-setup-7.2.10.tar.x</path>
+                    
+        </file>
+            
+    </download>
+    
+</downloadlist>
