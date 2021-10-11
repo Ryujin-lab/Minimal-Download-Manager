@@ -79,7 +79,6 @@ public class Pool extends Thread implements Observer {
 		remove(manager);
 	}
 
-
 	public synchronized void removeAll() {
 		List<Long> ids = new ArrayList<>();
 

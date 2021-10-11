@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import com.lordUdin.downloader.Manager;
 import com.lordUdin.downloader.Metadata;
 import com.lordUdin.downloader.Pool;
+import com.lordUdin.downloader.Stat;
 import com.lordUdin.object.PartsMetadata;
 import com.lordUdin.object.Status;
 import com.lordUdin.xmlHandler.Configuration;
@@ -44,16 +45,16 @@ public class HomeLayout extends JFrame implements Observer {
 	@SuppressWarnings({ "unused", "serial" })
 	public HomeLayout() {
 		final int COLUMN_DOWNLOADID = 0;
-		final int COLUMN_FILENAME 	= 1;
-		final int COLUMN_FILEPATH 	= 2;
-		final int COLUMN_URL		= 3;
-		final int COLUMN_SIZE		= 4;
-		final int COLUMN_STATUS		= 5;
-		final int COLUMN_DOWNLOADED	= 6;
-		final int COLUMN_SPEED		= 7;
-		final int COLUMN_TIMEREM	= 8;
-		final int COLUMN_STARTTIME	= 9;
-		final int COLUMN_ENDTIME	= 10;
+		final int COLUMN_FILENAME = 1;
+		final int COLUMN_FILEPATH = 2;
+		final int COLUMN_URL = 3;
+		final int COLUMN_SIZE = 4;
+		final int COLUMN_STATUS = 5;
+		final int COLUMN_DOWNLOADED = 6;
+		final int COLUMN_SPEED = 7;
+		final int COLUMN_TIMEREM = 8;
+		final int COLUMN_STARTTIME = 9;
+		final int COLUMN_ENDTIME = 10;
 
 		final HomeLayout uiRef = this;
 
@@ -63,31 +64,39 @@ public class HomeLayout extends JFrame implements Observer {
 		setLocationByPlatform(true);
 		addWindowListener(new WindowListener() {
 			@Override
-			public void windowOpened(WindowEvent e) {  }
+			public void windowOpened(WindowEvent e) {
+			}
 
 			@Override
-			public void windowIconified(WindowEvent e) { }
+			public void windowIconified(WindowEvent e) {
+			}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) { }
+			public void windowDeiconified(WindowEvent e) {
+			}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) { }
+			public void windowDeactivated(WindowEvent e) {
+			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
 				pool.removeAll();
 
 				setVisible(false);
-				try { Thread.sleep(5000); }
-				catch (InterruptedException ex) { }
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException ex) {
+				}
 			}
 
 			@Override
-			public void windowClosed(WindowEvent e) { }
+			public void windowClosed(WindowEvent e) {
+			}
 
 			@Override
-			public void windowActivated(WindowEvent arg0) { }
+			public void windowActivated(WindowEvent arg0) {
+			}
 		});
 
 		JButton newDownload = new JButton("Download");
@@ -117,7 +126,6 @@ public class HomeLayout extends JFrame implements Observer {
 
 		header.add(newDownload);
 
-
 		contentPane = new JPanel();
 		footer = new JPanel();
 
@@ -126,10 +134,10 @@ public class HomeLayout extends JFrame implements Observer {
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] {200};
-		gbl_contentPane.rowHeights = new int[]{363, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0};
-		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 200 };
+		gbl_contentPane.rowHeights = new int[] { 363, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 1.0 };
+		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -161,7 +169,7 @@ public class HomeLayout extends JFrame implements Observer {
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				int selectedRowCount = table.getSelectedRowCount();
 
-				if(selectedRowCount == 0) {
+				if (selectedRowCount == 0) {
 					popupPause.setEnabled(false);
 					popupResume.setEnabled(false);
 					popupCancel.setEnabled(false);
@@ -174,40 +182,43 @@ public class HomeLayout extends JFrame implements Observer {
 					popupOpenFile.setEnabled(false);
 
 					/*
-					 * Disable pause, resume and cancel button based on
-					 * downloading status.
+					 * Disable pause, resume and cancel button based on downloading status.
 					 */
 					String value = table.getValueAt(selectedRow, 5) + "";
 					Status downStatus = Status.valueOf(value);
 
 					switch (downStatus) {
-					case DOWNLOADING:
-						popupResume.setEnabled(false);
-						break;
-					case ERROR:
-						popupCancel.setEnabled(false);
-						popupPause.setEnabled(false);
-						break;
-					case COMPLETED:
-						popupProgress.setEnabled(false);
-						popupPause.setEnabled(false);
-						popupResume.setEnabled(false);
-						popupCancel.setEnabled(false);
-						popupOpenFile.setEnabled(true);
-						break;
-					case NEW:
-						popupPause.setEnabled(false);
-						popupResume.setEnabled(false);
-						popupCancel.setEnabled(false);
-						break;
-					case READY:
-						popupPause.setEnabled(false);
-						popupResume.setEnabled(false);
-						break;
-					case PAUSED:
-						popupPause.setEnabled(false);
-						popupCancel.setEnabled(false);
-						break;
+						case DOWNLOADING:
+							popupResume.setEnabled(false);
+							break;
+						case ERROR:
+							popupProgress.setEnabled(false);
+							popupCancel.setEnabled(false);
+							popupPause.setEnabled(false);
+							break;
+						case COMPLETED:
+							popupProgress.setEnabled(false);
+							popupPause.setEnabled(false);
+							popupResume.setEnabled(false);
+							popupCancel.setEnabled(false);
+							popupOpenFile.setEnabled(true);
+							break;
+						case NEW:
+							popupProgress.setEnabled(false);
+							popupPause.setEnabled(false);
+							popupResume.setEnabled(false);
+							popupCancel.setEnabled(false);
+							break;
+						case READY:
+							popupProgress.setEnabled(false);
+							popupPause.setEnabled(false);
+							popupResume.setEnabled(false);
+							break;
+						case PAUSED:
+							popupProgress.setEnabled(false);
+							popupPause.setEnabled(false);
+							popupCancel.setEnabled(false);
+							break;
 					}
 				}
 
@@ -215,6 +226,7 @@ public class HomeLayout extends JFrame implements Observer {
 
 			@Override
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				popupProgress.setEnabled(true);
 				popupPause.setEnabled(true);
 				popupResume.setEnabled(true);
 				popupCancel.setEnabled(true);
@@ -229,24 +241,22 @@ public class HomeLayout extends JFrame implements Observer {
 			}
 		});
 
-		popupProgress.addActionListener(
-			(e)->{
-				int selectedRow = table.getSelectedRow();
-
-				if(selectedRow >= 0) {
-					System.out.println (selectedRow);
-				}
-				else{
-					System.out.println ("no row selected");
-				}
-			}
-		);
-
-		popupPause.addActionListener((e)->{
+		popupProgress.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, 0));
+			if (selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String) table.getValueAt(selectedRow, 0));
+				new DownloadProgress(downloadId, pool, this);
+			} else {
+				System.out.println("no row selected");
+			}
+		});
+
+		popupPause.addActionListener((e) -> {
+			int selectedRow = table.getSelectedRow();
+
+			if (selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String) table.getValueAt(selectedRow, 0));
 				pool.remove(downloadId);
 
 				// Set the current status as downloading
@@ -254,72 +264,70 @@ public class HomeLayout extends JFrame implements Observer {
 			}
 		});
 
-		popupResume.addActionListener((e)->{
+		popupResume.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+			if (selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String) table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
 
 				addNewDownload(downloadId);
 			}
 		});
 
-		popupCancel.addActionListener((e)->{
+		popupCancel.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+			if (selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String) table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
 
 				pool.remove(downloadId);
 			}
 		});
 
-		popupOpenFile.addActionListener((e)->{
+		popupOpenFile.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
-			if(selectedRow != -1) {
+			if (selectedRow != -1) {
 				String path = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
 
 				try {
-					if(Desktop.isDesktopSupported())
+					if (Desktop.isDesktopSupported())
 						Desktop.getDesktop().open(new File(path));
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 
-		popupOpenDir.addActionListener((e)->{
+		popupOpenDir.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
-			if(selectedRow != -1) {
+			if (selectedRow != -1) {
 				String fname = (String) table.getValueAt(selectedRow, COLUMN_FILENAME);
 				String fpath = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
 
-				String path  = fpath.substring(0, fpath.lastIndexOf(fname));
+				String path = fpath.substring(0, fpath.lastIndexOf(fname));
 
 				try {
-					if(Desktop.isDesktopSupported())
+					if (Desktop.isDesktopSupported())
 						Desktop.getDesktop().open(new File(path));
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-
-		popupClear.addActionListener((e)->{
+		popupClear.addActionListener((e) -> {
 			XMLFactory factory = XMLFactory.newXMLFactory();
 			try {
 				int activeDownloads = pool.activeDownloadCount();
 
-				if(activeDownloads >= 1) {
-					int choice = JOptionPane.showConfirmDialog(uiRef,
-							"This will stop all active downloads. Sure to clear list?", "Confirm",
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (activeDownloads >= 1) {
+					int choice = JOptionPane.showConfirmDialog(uiRef, "This will stop all active downloads. Sure to clear list?",
+							"Confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 					if (choice != JOptionPane.YES_OPTION)
 						return;
@@ -340,25 +348,23 @@ public class HomeLayout extends JFrame implements Observer {
 			}
 		});
 
-		popupRemove.addActionListener((e)->{
+		popupRemove.addActionListener((e) -> {
 			int selectedRow = table.getSelectedRow();
 
 			if (selectedRow != -1) {
-				long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+				long downloadId = Long.parseLong((String) table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
 
 				XMLFactory factory = XMLFactory.newXMLFactory();
 
 				try {
 					factory.removeDownloadMetadata(downloadId);
 
-
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					model.removeRow(selectedRow);
 					table.setModel(model);
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef,
-							"Unable to remove selected from download list.\n" + ex.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(uiRef, "Unable to remove selected from download list.\n" + ex.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -375,20 +381,16 @@ public class HomeLayout extends JFrame implements Observer {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		table.setSurrendersFocusOnKeystroke(true);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] { "", "File name", "Path", "URL", "Size", "Status", "Downloaded", "Transfer rate",
-						"Time Remaining", "Started on", "Completed on" }
-			) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false, false, false, false
-			};
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "File name", "Path", "URL", "Size",
+				"Status", "Downloaded", "Transfer rate", "Time Remaining", "Started on", "Completed on" }) {
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false, false,
+					false };
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-			
+
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -422,43 +424,43 @@ public class HomeLayout extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		final int COLUMN_STATUS			= 5;
-		final int COLUMN_DOWNLOADED		= 6;
-		final int COLUMN_TRANSFER_RATE	= 7;
+		final int COLUMN_STATUS = 5;
+		final int COLUMN_DOWNLOADED = 6;
+		final int COLUMN_TRANSFER_RATE = 7;
 
-		if(o instanceof Manager) {
+		if (o instanceof Manager) {
 			Manager manager = (Manager) o;
 
 			int rowToUpdate = getDownloadRow(manager.getDownloadId());
 
-			String status	= manager.getStatus().name();
-			String completed = toMB(manager.getDownloadCompleted());
-			String transferRate	= toSpeed(manager.getDownloadSpeed());
+			String status = manager.getStatus().name();
+			String completed = Stat.toMB(manager.getDownloadCompleted());
+			String transferRate = Stat.toSpeed(manager.getDownloadSpeed());
 
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			int totalRows = model.getRowCount();
 
-			if(arg != null) {
+			if (arg != null) {
 				Metadata meta = manager.getMetadata();
 
-				String downloadId 	= meta.getId() + "";
-				String fileName		= meta.getFileName() + "." + meta.getFileType();
-				String filePath		= meta.getFilePath();
-				String url			= meta.getUrl();
-				String fileSize = toMB(meta.getFileSize());
-				String timeRemaining= "";
+				String downloadId = meta.getId() + "";
+				String fileName = meta.getFileName() + "." + meta.getFileType();
+				String filePath = meta.getFilePath();
+				String url = meta.getUrl();
+				String fileSize = Stat.toMB(meta.getFileSize());
+				String timeRemaining = "";
 
-				Date startTime 		= meta.getStartTime();
-				String startedOn	= (startTime == null) ? "" : DATE_FORMATTER.format(startTime);
+				Date startTime = meta.getStartTime();
+				String startedOn = (startTime == null) ? "" : DATE_FORMATTER.format(startTime);
 
 				Date endTime = meta.getEndTime();
-				String completedOn 	= (endTime == null) ? "" : (meta.getStatus() == Status.COMPLETED)
-						? DATE_FORMATTER.format(endTime) : "-";
+				String completedOn = (endTime == null) ? ""
+						: (meta.getStatus() == Status.COMPLETED) ? DATE_FORMATTER.format(endTime) : "-";
 
 				Object[] rowData = new Object[] { downloadId, fileName, filePath, url, fileSize, status, completed,
 						transferRate, timeRemaining, startedOn, completedOn };
 
-				if(rowToUpdate == -1) {
+				if (rowToUpdate == -1) {
 					model.addRow(rowData);
 					model.fireTableRowsInserted(totalRows, totalRows);
 				} else {
@@ -486,7 +488,6 @@ public class HomeLayout extends JFrame implements Observer {
 		}
 	}
 
-
 	private void populateDownloadList() {
 		XMLFactory factory = XMLFactory.newXMLFactory();
 
@@ -500,29 +501,30 @@ public class HomeLayout extends JFrame implements Observer {
 					JOptionPane.ERROR_MESSAGE);
 		}
 
-		if(metadata != null) {
+		if (metadata != null) {
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-			metadata.forEach((meta)->{
-				//"", "File name", "Path", "URL", "Size", "Status", "Downloaded", "Transfer rate", "Time Remaining", "Started on", "Completed on"
-				String id		= meta.getId() + "";
-				String fname	= meta.getFileName() + "." + meta.getFileType();
-				String fpath	= meta.getFilePath();
-				String url		= meta.getUrl();
-				String size		= toMB(meta.getFileSize());
-				String status	= meta.getStatus().name();
-				String completed= toMB(meta.getCompleted());
-				String transfer	= "";
-				String timeRem	= "";
+			metadata.forEach((meta) -> {
+				// "", "File name", "Path", "URL", "Size", "Status", "Downloaded", "Transfer
+				// rate", "Time Remaining", "Started on", "Completed on"
+				String id = meta.getId() + "";
+				String fname = meta.getFileName() + "." + meta.getFileType();
+				String fpath = meta.getFilePath();
+				String url = meta.getUrl();
+				String size = Stat.toMB(meta.getFileSize());
+				String status = meta.getStatus().name();
+				String completed = Stat.toMB(meta.getCompleted());
+				String transfer = "";
+				String timeRem = "";
 
-				Date startTime	= meta.getStartTime();
-				String startedOn= (startTime == null) ? "" : DATE_FORMATTER.format(startTime);
+				Date startTime = meta.getStartTime();
+				String startedOn = (startTime == null) ? "" : DATE_FORMATTER.format(startTime);
 
-				Date endTime 	= meta.getEndTime();
-				String complOn	= (endTime == null) ? "" : DATE_FORMATTER.format(endTime);
+				Date endTime = meta.getEndTime();
+				String complOn = (endTime == null) ? "" : DATE_FORMATTER.format(endTime);
 
-				Object[] rowData = new Object[] { id, fname, fpath, url, size, status, completed, transfer, timeRem,
-						startedOn, complOn };
+				Object[] rowData = new Object[] { id, fname, fpath, url, size, status, completed, transfer, timeRem, startedOn,
+						complOn };
 
 				model.addRow(rowData);
 			});
@@ -535,61 +537,33 @@ public class HomeLayout extends JFrame implements Observer {
 	private int getDownloadRow(long downloadId) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-		for(int i=0; i<model.getRowCount(); i++) {
+		for (int i = 0; i < model.getRowCount(); i++) {
 			String curId = (String) model.getValueAt(i, 0);
 
-			if(curId.equals(downloadId + ""))
+			if (curId.equals(downloadId + ""))
 				return i;
 		}
 
 		return -1;
 	}
 
-	private String toMB(long bytes) {
-		if(bytes == 0) return "";
-
-		float mb = bytes / (1024.0f * 1024.0f);
-
-		return String.format("%.2f MB", mb);
-	}
-
-	private String toSpeed(float rate) {
-		String[] SPEED = new String[] {"Bps", "KBps", "MBps", "GBps", "TBps" };
-
-		if(rate == Float.POSITIVE_INFINITY || rate == Float.NEGATIVE_INFINITY)
-			return String.format("0 %s", SPEED[0]);
-
-		int i=0;
-
-		while(i < SPEED.length && rate > 1024) {
-			if(rate != 0)
-				rate = rate / 1024.0f;
-			i++;
-		}
-
-		return String.format("%.2f %s", rate, SPEED[i]);
-	}
-
 	private void menuNewFileClick(ActionEvent evt) {
-		if(uiNewDownload == null)
+		if (uiNewDownload == null)
 			uiNewDownload = new NewDownload(this);
 
-		if(uiNewDownload.isVisible())
+		if (uiNewDownload.isVisible())
 			uiNewDownload.requestFocus();
 		else
 			uiNewDownload.setVisible(true);
 	}
 
-
 	public void addNewDownload(String url, String filePath) {
 		Manager downManager = new Manager(url, filePath);
 		downManager.addObserver(this);
-
 		pool.add(downManager);
-
 		update(downManager, true);
+		new DownloadProgress(downManager.getDownloadId(), pool, this);
 	}
-
 
 	public void addNewDownload(long downloadId) {
 		XMLFactory factory = XMLFactory.newXMLFactory();
@@ -602,42 +576,44 @@ public class HomeLayout extends JFrame implements Observer {
 			manager.addObserver(this);
 
 			pool.add(manager);
+			new DownloadProgress(downloadId, pool, this);
 		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(this, "Unable to resume download. \n" + ex.getMessage(),
-					"Error resuming", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Unable to resume download. \n" + ex.getMessage(), "Error resuming",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-
 	/**
 	 * Custom cell untk download tabel
+	 * 
 	 * @author lord udin
 	 *
 	 */
 	private class CellRendered extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 1L;
 
-		private final Color COLOR_BACKGROUND	= new Color(-2691076); 	// Light blue
-		private final Color COLOR_BACKGROUND_ALT= new Color(-331279); 	// Light red
-		private final Color COLOR_SELECTED		= new Color(-13335895); // Blue
+		private final Color COLOR_BACKGROUND = new Color(-2691076); // Light blue
+		private final Color COLOR_BACKGROUND_ALT = new Color(-331279); // Light red
+		private final Color COLOR_SELECTED = new Color(-13335895); // Blue
 
 		private final int PADDING_HORIZONTAL = 5;
-		private final int PADDING_VERTICAL	 = 10;
+		private final int PADDING_VERTICAL = 10;
 
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
 			Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-			if(row % 2 == 0)
+			if (row % 2 == 0)
 				cellComponent.setBackground(COLOR_BACKGROUND);
 			else
 				cellComponent.setBackground(COLOR_BACKGROUND_ALT);
 
-			if(isSelected)
+			if (isSelected)
 				cellComponent.setBackground(COLOR_SELECTED);
 
-			setBorder(BorderFactory.createEmptyBorder(PADDING_VERTICAL, PADDING_HORIZONTAL, PADDING_VERTICAL, PADDING_HORIZONTAL));
+			setBorder(
+					BorderFactory.createEmptyBorder(PADDING_VERTICAL, PADDING_HORIZONTAL, PADDING_VERTICAL, PADDING_HORIZONTAL));
 
 			return cellComponent;
 		}
