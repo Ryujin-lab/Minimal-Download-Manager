@@ -9,18 +9,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.lordUdin.xmlHandler.Configuration;
 
-@SuppressWarnings("serial")
 public class NewDownload extends JFrame{
 
 	private HomeLayout uiHome = null;
@@ -41,9 +34,11 @@ public class NewDownload extends JFrame{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 511, 155);
 		setLocationRelativeTo(uiHome);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "Download information", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setContentPane(contentPane);
+
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0};
@@ -52,7 +47,6 @@ public class NewDownload extends JFrame{
 		contentPane.setLayout(gbl_contentPane);
 
 		JLabel lblUrlToDownload = new JLabel("URL to download");
-		lblUrlToDownload.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblUrlToDownload = new GridBagConstraints();
 		gbc_lblUrlToDownload.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblUrlToDownload.insets = new Insets(5, 10, 5, 10);
@@ -79,7 +73,6 @@ public class NewDownload extends JFrame{
 		textUrl.setColumns(10);
 
 		JLabel lblSaveLocation = new JLabel("Save location");
-		lblSaveLocation.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		GridBagConstraints gbc_lblSaveLocation = new GridBagConstraints();
 		gbc_lblSaveLocation.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblSaveLocation.insets = new Insets(5, 10, 5, 10);
@@ -88,7 +81,6 @@ public class NewDownload extends JFrame{
 		contentPane.add(lblSaveLocation, gbc_lblSaveLocation);
 
 		textSaveLocation = new JTextField();
-		textSaveLocation.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		textSaveLocation.setColumns(10);
 		textSaveLocation.setText(Configuration.DEFAULT_DOWNLOAD_PATH);
 		textSaveLocation.setEditable(false);
@@ -183,6 +175,7 @@ public class NewDownload extends JFrame{
 			btnBrowseClick(evt);
 			return;
 		} 
+		
 		else {
 			File file = new File(filePath);
 

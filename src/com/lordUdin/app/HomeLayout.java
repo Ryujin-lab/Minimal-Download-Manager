@@ -1,21 +1,7 @@
 package com.lordUdin.app;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -25,19 +11,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -59,12 +36,11 @@ public class HomeLayout extends JFrame implements Observer {
 	private NewDownload uiNewDownload = null;
 	private Pool pool = Pool.getDownloadPool();
 
+	private JPanel header;
 	private JPanel contentPane;
 	private JTable table;
+	private JPanel footer;
 
-	/**
-	 * Create the frame.
-	 */
 	@SuppressWarnings({ "unused", "serial" })
 	public HomeLayout() {
 		final int COLUMN_DOWNLOADID = 0;
@@ -114,26 +90,41 @@ public class HomeLayout extends JFrame implements Observer {
 			public void windowActivated(WindowEvent arg0) { }
 		});
 
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		JButton newDownload = new JButton("Download");
 
-		JMenu menuDownload = new JMenu("Download");
-		menuDownload.setMnemonic('d');
-		menuBar.add(menuDownload);
-
-		JMenuItem menuNewFile = new JMenuItem("New File");
-		menuNewFile.setMnemonic('n');
-		menuNewFile.addActionListener(new ActionListener() {
+		newDownload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				menuNewFileClick(arg0);
 			}
 		});
-		menuDownload.add(menuNewFile);
+
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		setContentPane(mainPanel);
+		// BoxLayout mainLayout = new BoxLayout(, axis)
+
+		// header
+		header = new JPanel();
+		header.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		JButton pauseDownload = new JButton("Pause");
+		JButton cancelDownload = new JButton("Cancel");
+		JButton resumeDownload = new JButton("Resume");
+
+		JButton openfile = new JButton("Open File");
+		JButton openfileloc = new JButton("Open File Location");
+
+		header.add(newDownload);
+
 
 		contentPane = new JPanel();
+		footer = new JPanel();
+
+		mainPanel.add(header);
+		mainPanel.add(contentPane);
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] {200};
 		gbl_contentPane.rowHeights = new int[]{363, 0, 0};
@@ -145,146 +136,27 @@ public class HomeLayout extends JFrame implements Observer {
 
 		JPopupMenu popupMenu = new JPopupMenu();
 
+		JMenuItem popupProgress = new JMenuItem("Show Progress");
 		JMenuItem popupPause = new JMenuItem("Pause");
-		popupPause.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, 0));
-				pool.remove(downloadId);
-
-				// Set the current status as downloading
-				table.setValueAt(Status.DOWNLOADING, selectedRow, COLUMN_STATUS);
-			}
-		});
-		popupMenu.add(popupPause);
-
 		JMenuItem popupResume = new JMenuItem("Resume");
-		popupResume.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
-
-				addNewDownload(downloadId);
-			}
-		});
-		popupMenu.add(popupResume);
-
 		JMenuItem popupCancel = new JMenuItem("Cancel");
-		popupCancel.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if(selectedRow >= 0) {
-				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
-
-				pool.remove(downloadId);
-			}
-		});
-		popupMenu.add(popupCancel);
-
-		popupMenu.addSeparator();
-
 		JMenuItem popupOpenFile = new JMenuItem("Open file");
-		popupOpenFile.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if(selectedRow != -1) {
-				String path = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
-
-				try {
-					if(Desktop.isDesktopSupported())
-						Desktop.getDesktop().open(new File(path));
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		popupMenu.add(popupOpenFile);
-
 		JMenuItem popupOpenDir = new JMenuItem("Open directory");
-		popupOpenDir.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if(selectedRow != -1) {
-				String fname = (String) table.getValueAt(selectedRow, COLUMN_FILENAME);
-				String fpath = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
-
-				String path  = fpath.substring(0, fpath.lastIndexOf(fname));
-
-				try {
-					if(Desktop.isDesktopSupported())
-						Desktop.getDesktop().open(new File(path));
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		popupMenu.add(popupOpenDir);
-
-		popupMenu.addSeparator();
-
 		JMenuItem popupClear = new JMenuItem("Clear download list");
-		popupClear.addActionListener((e)->{
-			XMLFactory factory = XMLFactory.newXMLFactory();
-			try {
-				int activeDownloads = pool.activeDownloadCount();
+		JMenuItem popupRemove = new JMenuItem("Remove from download list");
 
-				if(activeDownloads >= 1) {
-					int choice = JOptionPane.showConfirmDialog(uiRef,
-							"This will stop all active downloads. Sure to clear list?", "Confirm",
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-					if (choice != JOptionPane.YES_OPTION)
-						return;
-				}
-
-				factory.clearDownloadList();
-
-				Configuration.cleanTempFiles();
-
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				model.getDataVector().clear();
-				table.setModel(model);
-				model.fireTableDataChanged();
-
-			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(uiRef, "Unable to clear download list. \n" + ex.getMessage(), "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		});
+		popupMenu.add(popupProgress);
+		popupMenu.addSeparator();
+		popupMenu.add(popupPause);
+		popupMenu.add(popupResume);
+		popupMenu.add(popupCancel);
+		popupMenu.add(popupOpenFile);
+		popupMenu.add(popupOpenDir);
+		popupMenu.addSeparator();
+		popupMenu.add(popupRemove);
 		popupMenu.add(popupClear);
 
-		JMenuItem popupRemove = new JMenuItem("Remove from download list");
-		popupRemove.addActionListener((e)->{
-			int selectedRow = table.getSelectedRow();
-
-			if (selectedRow != -1) {
-				long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
-
-				XMLFactory factory = XMLFactory.newXMLFactory();
-
-				try {
-					factory.removeDownloadMetadata(downloadId);
-
-
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					model.removeRow(selectedRow);
-					table.setModel(model);
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(uiRef,
-							"Unable to remove selected from download list.\n" + ex.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		popupMenu.add(popupRemove);
-
 		popupMenu.addPopupMenuListener(new PopupMenuListener() {
-
 			@Override
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				int selectedRowCount = table.getSelectedRowCount();
@@ -317,6 +189,7 @@ public class HomeLayout extends JFrame implements Observer {
 						popupPause.setEnabled(false);
 						break;
 					case COMPLETED:
+						popupProgress.setEnabled(false);
 						popupPause.setEnabled(false);
 						popupResume.setEnabled(false);
 						popupCancel.setEnabled(false);
@@ -356,6 +229,140 @@ public class HomeLayout extends JFrame implements Observer {
 			}
 		});
 
+		popupProgress.addActionListener(
+			(e)->{
+				int selectedRow = table.getSelectedRow();
+
+				if(selectedRow >= 0) {
+					System.out.println (selectedRow);
+				}
+				else{
+					System.out.println ("no row selected");
+				}
+			}
+		);
+
+		popupPause.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if(selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, 0));
+				pool.remove(downloadId);
+
+				// Set the current status as downloading
+				table.setValueAt(Status.DOWNLOADING, selectedRow, COLUMN_STATUS);
+			}
+		});
+
+		popupResume.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if(selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+
+				addNewDownload(downloadId);
+			}
+		});
+
+		popupCancel.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if(selectedRow >= 0) {
+				Long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+
+				pool.remove(downloadId);
+			}
+		});
+
+		popupOpenFile.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if(selectedRow != -1) {
+				String path = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
+
+				try {
+					if(Desktop.isDesktopSupported())
+						Desktop.getDesktop().open(new File(path));
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		popupOpenDir.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if(selectedRow != -1) {
+				String fname = (String) table.getValueAt(selectedRow, COLUMN_FILENAME);
+				String fpath = (String) table.getValueAt(selectedRow, COLUMN_FILEPATH);
+
+				String path  = fpath.substring(0, fpath.lastIndexOf(fname));
+
+				try {
+					if(Desktop.isDesktopSupported())
+						Desktop.getDesktop().open(new File(path));
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(uiRef, "Unable to open the selected file.\n" + ex.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		});
+
+
+		popupClear.addActionListener((e)->{
+			XMLFactory factory = XMLFactory.newXMLFactory();
+			try {
+				int activeDownloads = pool.activeDownloadCount();
+
+				if(activeDownloads >= 1) {
+					int choice = JOptionPane.showConfirmDialog(uiRef,
+							"This will stop all active downloads. Sure to clear list?", "Confirm",
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+					if (choice != JOptionPane.YES_OPTION)
+						return;
+				}
+
+				factory.clearDownloadList();
+
+				Configuration.cleanTempFiles();
+
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.getDataVector().clear();
+				table.setModel(model);
+				model.fireTableDataChanged();
+
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(uiRef, "Unable to clear download list. \n" + ex.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		});
+
+		popupRemove.addActionListener((e)->{
+			int selectedRow = table.getSelectedRow();
+
+			if (selectedRow != -1) {
+				long downloadId = Long.parseLong((String)table.getValueAt(selectedRow, COLUMN_DOWNLOADID));
+
+				XMLFactory factory = XMLFactory.newXMLFactory();
+
+				try {
+					factory.removeDownloadMetadata(downloadId);
+
+
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.removeRow(selectedRow);
+					table.setModel(model);
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(uiRef,
+							"Unable to remove selected from download list.\n" + ex.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -381,6 +388,7 @@ public class HomeLayout extends JFrame implements Observer {
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
+			
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -412,10 +420,6 @@ public class HomeLayout extends JFrame implements Observer {
 		populateDownloadList();
 	}
 
-
-	/**
-	 * On each download activity update the GUI accordingly
-	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		final int COLUMN_STATUS			= 5;
@@ -434,9 +438,7 @@ public class HomeLayout extends JFrame implements Observer {
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			int totalRows = model.getRowCount();
 
-			// If this is a new download
 			if(arg != null) {
-				// Add a new row
 				Metadata meta = manager.getMetadata();
 
 				String downloadId 	= meta.getId() + "";
@@ -456,7 +458,6 @@ public class HomeLayout extends JFrame implements Observer {
 				Object[] rowData = new Object[] { downloadId, fileName, filePath, url, fileSize, status, completed,
 						transferRate, timeRemaining, startedOn, completedOn };
 
-
 				if(rowToUpdate == -1) {
 					model.addRow(rowData);
 					model.fireTableRowsInserted(totalRows, totalRows);
@@ -474,7 +475,7 @@ public class HomeLayout extends JFrame implements Observer {
 					model.fireTableRowsUpdated(rowToUpdate, rowToUpdate);
 				}
 			} else {
-				// Update the column cells
+
 				model.setValueAt(status, rowToUpdate, COLUMN_STATUS);
 				model.setValueAt(completed, rowToUpdate, COLUMN_DOWNLOADED);
 				model.setValueAt(transferRate, rowToUpdate, COLUMN_TRANSFER_RATE);
@@ -486,9 +487,6 @@ public class HomeLayout extends JFrame implements Observer {
 	}
 
 
-	/**
-	 * Populate the download list with existing downloads
-	 */
 	private void populateDownloadList() {
 		XMLFactory factory = XMLFactory.newXMLFactory();
 
