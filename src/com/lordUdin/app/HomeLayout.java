@@ -29,6 +29,7 @@ import com.lordUdin.object.Status;
 import com.lordUdin.xmlHandler.Configuration;
 import com.lordUdin.xmlHandler.XMLFactory;
 
+
 public class HomeLayout extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 
@@ -57,6 +58,15 @@ public class HomeLayout extends JFrame implements Observer {
 		final int COLUMN_ENDTIME = 10;
 
 		final HomeLayout uiRef = this;
+		final String[] MEMBER = {			
+			"[F1D018006] Alidin" ,
+			"[F1D018008] Ayu Rezki",
+			"[F1D018016] Efti Yuniarsih",
+			"[F1D018034] Maidatun Izzati",
+			"[F1D018056] Sharah Almira Najati",
+			"[F1D018060] Wahyu Alfandi",
+			"[F1D018078] Ida Ayu Vigi Meidhyana Putri"
+		};
 
 		setTitle("Minimal Download Manager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,9 +138,19 @@ public class HomeLayout extends JFrame implements Observer {
 
 		contentPane = new JPanel();
 		footer = new JPanel();
+		footer.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		JPanel footerContainer = new JPanel();
+		footerContainer.setLayout(new BoxLayout(footerContainer, BoxLayout.Y_AXIS));
+		footer.add(footerContainer);
+
+		for (String memberName : MEMBER){
+			footerContainer.add(new JLabel(memberName));
+		}
 
 		mainPanel.add(header);
 		mainPanel.add(contentPane);
+		mainPanel.add(footer);
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridBagLayout gbl_contentPane = new GridBagLayout();

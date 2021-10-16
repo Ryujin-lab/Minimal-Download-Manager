@@ -1,10 +1,7 @@
 package com.lordUdin.downloader;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.net.*;
 import java.util.Date;
 
 import com.lordUdin.object.Status;

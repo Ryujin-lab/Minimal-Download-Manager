@@ -1,923 +1,211 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <downloadlist>
-                                                                                                                                                                                                                                            
+                                
 
     
-
     
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <download id="1633872038741" range="true">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    <download id="1633963976547" range="true">
+                                                        
         
         
         
         
         
+        <starttime>1633963977532</starttime>
+                                                        
         
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <starttime>1633872041610</starttime>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <endtime>1633872058468</endtime>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        <endtime>1633963979765</endtime>
+                                                        
         
         
         
         
         
         <status>COMPLETED</status>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                                                        
         
         
         
         
         
         <completed>2279794</completed>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                                                        
         
         
         
         
         
         <url>https://file-examples-com.github.io/uploads/2018/04/file_example_AVI_1920_2_3MG.avi</url>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                                                        
         
         
         
         
         
         <file>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                                                                                    
             
             
             
             
             
             <name>file_example_AVI_1920_2_3MG</name>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                                                                                    
             
             
             
             
             
             <type>avi</type>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                                                                                    
             
             
             
             
             
             <size>2279794</size>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                                                                                    
             
             
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <path>/home/zan/Downloads/file_example_AVI_1920_2_3MG.avi</path>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            <path>/home/zan/JDM/file_example_AVI_1920_2_3MG.avi</path>
+                                                                                
         
         
         
         
         
         </file>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                                                    
     
     
     
     
     
     </download>
-                                                                                                                                                                                                                                
-    
-
-    
-
-    
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
+                        
     
 
     
     
     
     
+    <download id="1633964027318" range="true">
+                                        
+        
+        
+        
+        <starttime>1633964028580</starttime>
+                                        
+        
+        
+        
+        <endtime>1633964038389</endtime>
+                                        
+        
+        
+        
+        <status>COMPLETED</status>
+                                        
+        
+        
+        
+        <completed>5242880</completed>
+                                        
+        
+        
+        
+        <url>http://212.183.159.230/5MB.zip</url>
+                                        
+        
+        
+        
+        <file>
+                                                            
             
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-                                                                                            
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    
             
-
+            
+            <name>5MB</name>
+                                                            
+            
+            
+            
+            <type>zip</type>
+                                                            
+            
+            
+            
+            <size>5242880</size>
+                                                            
+            
+            
+            
+            <path>/home/zan/JDM/5MB.zip</path>
+                                                        
+        
+        
+        
+        </file>
+                                    
+    
+    
+    
+    </download>
+                
+    
+    
+    
+        
     
 
     
-    <download id="1633961891741" range="true">
+    <download id="1633964082275" range="true">
                 
-        <starttime>1633961892821</starttime>
+        <starttime>1633964087417</starttime>
                 
-        <endtime>1633961922607</endtime>
+        <endtime>1633964103200</endtime>
                 
         <status>PAUSED</status>
                 
-        <completed>18792431</completed>
+        <completed>6581618</completed>
                 
-        <url>http://212.183.159.230/100MB.zip</url>
+        <url>http://212.183.159.230/200MB.zip</url>
                 
         <file>
                         
-            <name>100MB</name>
+            <name>200MB</name>
                         
             <type>zip</type>
                         
-            <size>104857600</size>
+            <size>209715200</size>
                         
-            <path>/home/zan/JDM/100MB.zip</path>
+            <path>/home/zan/JDM/200MB.zip</path>
                     
         </file>
             
     </download>
     
-    <download id="1633953988257" range="true">
-        <starttime>1633953989159</starttime>
-        <endtime>1633961924245</endtime>
+    <download id="1633964067757" range="true">
+        <starttime>1633964068929</starttime>
+        <endtime>1633964105839</endtime>
         <status>PAUSED</status>
-        <completed>389690965</completed>
-        <url>http://212.183.159.230/1GB.zip</url>
+        <completed>43274594</completed>
+        <url>http://212.183.159.230/100MB.zip</url>
         <file>
-            <name>1GB</name>
+            <name>100MB</name>
             <type>zip</type>
-            <size>1073741824</size>
-            <path>/home/zan/JDM/1GB.zip</path>
+            <size>104857600</size>
+            <path>/home/zan/JDM/100MB.zip</path>
         </file>
     </download>
 </downloadlist>

@@ -1,19 +1,8 @@
 package com.lordUdin.downloader;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 import java.util.Observable;
 
 import javax.swing.JOptionPane;
